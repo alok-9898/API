@@ -1,2 +1,4 @@
 # API
-learning API creating a weather sample websiote
+API demo
+learning API creating a weather sample website
+By - Alok Sharma
