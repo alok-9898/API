@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Weather App</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background: url('') no-repeat center center/cover;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            color: white;
+            text-align: center;
+            flex-direction: column;
+        }
+        .container {
+            background: rgba(0, 0, 0, 0.6);
+            padding: 20px;
+            border-radius: 10px;
+        }
+        button {
+            padding: 10px;
+            border: none;
+            background: #3498db;
+            color: white;
+            cursor: pointer;
+            border-radius: 5px;
+            margin-top: 10px;
+        }
+        input {
+            padding: 10px;
+            border: none;
+            border-radius: 5px;
+            margin-bottom: 10px;
+        }
+    </style>
+</head>
+<body>
+    <input type="file" id="bgUpload" accept="image/*" onchange="changeBackground(event)">
+    <div class="container">
+        <h1>Weather App</h1>
+        <input type="text" id="locationInput" placeholder="Enter location">
+        <button onclick="fetchWeather()">Get Weather</button>
+        <p id="location">Location: --</p>
+        <p id="temperature">Temperature: --°C</p>
+        <p id="condition">Condition: --</p>
+    </div>
+
+    <script>
+        function changeBackground(event) {
+            const file = event.target.files[0];
+            if (file) {
+                const reader = new FileReader();
+                reader.onload = function(e) {
+                    document.body.style.backgroundImage = `url('${e.target.result}')`;
+                };
+                reader.readAsDataURL(file);
+            }
+        }
+
+        async function fetchWeather() {
+            const location = document.getElementById('locationInput').value;
+            if (!location) {
+                alert('Please enter a location.');
+                return;
+            }
+            const apiUrl = `https://api.weatherapi.com/v1/current.json?key=624a9cc224864b9cad4184804252502&q=${location}&aqi=yes`;
+            try {
+                const response = await fetch(apiUrl);
+                const data = await response.json();
+                document.getElementById('location').innerText = `Location: ${data.location.name}, ${data.location.country}`;
+                document.getElementById('temperature').innerText = `Temperature: ${data.current.temp_c}°C`;
+                document.getElementById('condition').innerText = `Condition: ${data.current.condition.text}`;
+            } catch (error) {
+                alert('Failed to fetch weather data.');
+            }
+        }
+    </script>
+</body>
+</html>
