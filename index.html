@@ -39,7 +39,6 @@
     </style>
 </head>
 <body>
-    <input type="file" id="bgUpload" accept="image/*" onchange="changeBackground(event)">
     <div class="container">
         <h1>Weather App</h1>
         <input type="text" id="locationInput" placeholder="Enter location">
@@ -50,16 +49,6 @@
     </div>
 
     <script>
-        function changeBackground(event) {
-            const file = event.target.files[0];
-            if (file) {
-                const reader = new FileReader();
-                reader.onload = function(e) {
-                    document.body.style.backgroundImage = `url('${e.target.result}')`;
-                };
-                reader.readAsDataURL(file);
-            }
-        }
 
         async function fetchWeather() {
             const location = document.getElementById('locationInput').value;
