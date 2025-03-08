@@ -1,6 +1,6 @@
 # API
 API demo 
 <br>
-learning API creating a weather search engine
+creating a weather search engine using API
 <br>
 By - Alok Sharma
